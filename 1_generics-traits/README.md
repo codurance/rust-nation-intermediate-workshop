@@ -13,9 +13,9 @@ trait MyIterator {
 All data structures are prefixed with `My` to avoid confusions with the real implementation of Iterator.
 
 The goal of this exercise is to implement the following methods on MyIterator trait:
-- filter(...) -> MyFilter
-- map(...) -> MyMap
-- sum(...) -> i32
+- my_filter(...) -> MyFilter
+- my_map(...) -> MyMap
+- my_sum(...) -> i32
 
 ## Implement a function that can print a `MyIterator`
 
