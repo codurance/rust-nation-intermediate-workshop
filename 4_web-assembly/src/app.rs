@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use crate::components::todos::TodoList;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -12,32 +13,7 @@ pub fn app() -> Html {
                 <section class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox" />
                     <label for="toggle-all" />
-                    <ul class="todo-list">
-                        <li>
-                            <div class="view">
-                                <input type="checkbox" class="toggle" />
-                                <label>{"TODO 1"}</label>
-                                <button class="destroy" />
-                            </div>
-                            <input class="edit" type="text" value={"TODO 1"} hidden={true} />
-                        </li>
-                        <li class={"completed"}>
-                            <div class="view">
-                                <input type="checkbox" class="toggle" checked={true} />
-                                <label>{"TODO 2"}</label>
-                                <button class="destroy" />
-                            </div>
-                            <input class="edit" type="text" value={"TODO 2"} hidden={true} />
-                        </li>
-                        <li class={"editing"}>
-                            <div class="view">
-                                <input type="checkbox" class="toggle" />
-                                <label>{"TODO 3"}</label>
-                                <button class="destroy" />
-                            </div>
-                            <input class="edit" type="text" value={"TODO 3"} />
-                        </li>
-                    </ul>
+                    <TodoList />
                 </section>
                 <footer class="footer">
                     <span class="todo-count">
