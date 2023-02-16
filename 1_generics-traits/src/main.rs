@@ -6,12 +6,16 @@ trait MyIterator {
     fn next(&mut self) -> Option<Self::Item>;
 
     // Replace ? with correct Generic type parameters
-    // fn my_filter<?>(self, predicate: ?) -> MyFilter<?, ?> {
-    //     MyFilter {
-    //         iterator: self,
-    //         predicate,
-    //     }
-    // }
+    fn my_filter<P>(self, predicate: P) -> MyFilter<Self, P>
+    where
+        P: Fn(&Self::Item) -> bool,
+        Self: Sized,
+    {
+        MyFilter {
+            iterator: self,
+            predicate,
+        }
+    }
 
     // fn my_map(self, mapper: ?) -> MyMap {
     //     todo!()
@@ -39,23 +43,43 @@ struct MyFilter<I, P> {
     predicate: P,
 }
 
+impl<I, P> MyIterator for MyFilter<I, P>
+where
+    I: MyIterator,
+    P: Fn(&I::Item) -> bool,
+{
+    type Item = I::Item;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while let Some(value) = self.iterator.next() {
+            if (self.predicate)(&value) {
+                return Some(value);
+            }
+        }
+        None
+    }
+}
+
 struct MyMap<I, M> {
     iterator: I,
-    mapper: M
+    mapper: M,
 }
 
 fn print_iterator<T: Display>(mut iterator: impl MyIterator<Item = T>) {
     // Remember that MyIterator is not integrated to Rust
     // you will not be able to use `for elt in iterator {`
-    todo!()
+    while let Some(value) = iterator.next() {
+        print!("{},", value);
+    }
+    println!();
 }
 
 fn main() {
     let enumeration = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     print_iterator(enumeration.clone());
 
-    // let filtered = enumeration.clone().my_filter(|&item| item % 2 == 0);
-    // print_iterator(filtered);
+    let filtered = enumeration.clone().my_filter(|&item| item % 2 == 0);
+    print_iterator(filtered);
 
     // let mapped = enumeration.clone().my_map(|item| format!("Value: {}", item));
     // print_iterator(mapped);
