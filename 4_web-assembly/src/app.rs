@@ -1,20 +1,25 @@
 use yew::prelude::*;
-use crate::components::todos::{Mode, Todo, TodoList};
+use crate::components::todos::{Mode, Todo, TodoList, NewTodo};
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let todos = use_state(|| vec![
-        Todo::new("TODO 1e", Mode::New),
-        Todo::new("TODO 2e", Mode::Completed),
-        Todo::new("TODO 3e", Mode::Editing),
-    ]);
+    let todos = use_state(|| vec![]);
+
+    let add_new_todo = {
+        let todos = todos.clone();
+        Callback::from(move |label: String| {
+            let mut new_todos = (*todos).clone();
+            new_todos.push(Todo::new(&label, Mode::New));
+            todos.set(new_todos);
+        })
+    };
 
     html! {
         <div class="todomvc-wrapper">
             <section class="todoapp">
                 <header class="header">
                     <h1>{"todos"}</h1>
-                    <input class="new-todo" placeholder="What needs to be done?" />
+                    <NewTodo on_todo_entered={add_new_todo} />
                 </header>
                 <section class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox" />
