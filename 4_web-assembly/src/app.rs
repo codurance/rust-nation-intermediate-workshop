@@ -1,8 +1,14 @@
 use yew::prelude::*;
-use crate::components::todos::TodoList;
+use crate::components::todos::{Mode, Todo, TodoList};
 
 #[function_component(App)]
 pub fn app() -> Html {
+    let todos = use_state(|| vec![
+        Todo::new("TODO 1e", Mode::New),
+        Todo::new("TODO 2e", Mode::Completed),
+        Todo::new("TODO 3e", Mode::Editing),
+    ]);
+
     html! {
         <div class="todomvc-wrapper">
             <section class="todoapp">
@@ -13,7 +19,7 @@ pub fn app() -> Html {
                 <section class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox" />
                     <label for="toggle-all" />
-                    <TodoList />
+                    <TodoList todos={(*todos).clone()} />
                 </section>
                 <footer class="footer">
                     <span class="todo-count">

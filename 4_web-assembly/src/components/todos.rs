@@ -1,20 +1,20 @@
 use yew::prelude::*;
 
 #[derive(PartialEq, Clone)]
-enum Mode {
+pub enum Mode {
     New,
     Completed,
     Editing,
 }
 
 #[derive(PartialEq, Clone)]
-struct Todo {
+pub struct Todo {
     label: String,
     mode: Mode,
 }
 
 impl Todo {
-    fn new(label: &str, mode: Mode) -> Self {
+    pub fn new(label: &str, mode: Mode) -> Self {
         Self {
             label: label.into(),
             mode,
@@ -22,17 +22,16 @@ impl Todo {
     }
 }
 
-#[function_component(TodoList)]
-pub fn todo_list() -> Html {
-    let todos = vec![
-        Todo::new("TODO 1d", Mode::New),
-        Todo::new("TODO 2d", Mode::Completed),
-        Todo::new("TODO 3d", Mode::Editing),
-    ];
+#[derive(Properties, PartialEq)]
+pub struct TodoListProps {
+    pub todos: Vec<Todo>
+}
 
+#[function_component(TodoList)]
+pub fn todo_list(props: &TodoListProps) -> Html {
     html! {
         <ul class="todo-list">
-            { for todos.iter().map(|t| {
+            { for props.todos.iter().map(|t| {
                 html! {
                     <TodoItem todo={(*t).clone()} />
                 }
