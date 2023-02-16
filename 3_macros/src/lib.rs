@@ -20,9 +20,21 @@ macro_rules! json {
     //         ???
     //     )
     // };
-    // (???) => {
-    //     ??? // Number, String, Boolean
-    // };
+    ($value:expr) => {
+        Json::from($value)
+    };
+}
+
+impl From<bool> for Json {
+    fn from(value: bool) -> Self {
+        Json::Boolean(value)
+    }
+}
+
+impl From<&str> for Json {
+    fn from(value: &str) -> Self {
+        Json::String(value.into())
+    }
 }
 
 #[cfg(test)]
@@ -34,15 +46,15 @@ mod tests {
         assert_eq!(json!(null), Json::Null);
     }
 
-    // #[test]
-    // fn parse_a_valid_boolean() {
-    //     assert_eq!(json!(true), Json::Boolean(true));
-    // }
+    #[test]
+    fn parse_a_valid_boolean() {
+        assert_eq!(json!(true), Json::Boolean(true));
+    }
 
-    // #[test]
-    // fn parse_a_valid_string() {
-    //     assert_eq!(json!("Hello"), Json::String(String::from("Hello")));
-    // }
+    #[test]
+    fn parse_a_valid_string() {
+        assert_eq!(json!("Hello"), Json::String(String::from("Hello")));
+    }
 
     // #[test]
     // fn parse_a_valid_array() {
