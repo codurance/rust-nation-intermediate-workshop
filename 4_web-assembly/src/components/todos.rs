@@ -4,14 +4,7 @@ use yew::{function_component, Html, html};
 pub fn todo_list() -> Html {
     html! {
         <ul class="todo-list">
-            <li>
-                <div class="view">
-                    <input type="checkbox" class="toggle" />
-                    <label>{"TODO 1a"}</label>
-                    <button class="destroy" />
-                </div>
-                <input class="edit" type="text" value={"TODO 1a"} hidden={true} />
-            </li>
+            <TodoItem />
             <li class={"completed"}>
                 <div class="view">
                     <input type="checkbox" class="toggle" checked={true} />
@@ -29,5 +22,19 @@ pub fn todo_list() -> Html {
                 <input class="edit" type="text" value={"TODO 3a"} />
             </li>
         </ul>
+    }
+}
+
+#[function_component(TodoItem)]
+pub fn todo_item() -> Html {
+    html! {
+        <li>
+            <div class="view">
+                <input type="checkbox" class="toggle" />
+                <label>{"TODO 1b"}</label>
+                <button class="destroy" />
+            </div>
+            <input class="edit" type="text" value={"TODO 1a"} hidden={true} />
+        </li>
     }
 }
