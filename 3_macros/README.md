@@ -1,6 +1,6 @@
 # Parsing a JSON like structure
 
-This exercise is inspired by the macro example in the [Programming Rust - Blandy, Orendorff & Tindall](LINK) book.
+This exercise is inspired by the macro example in the [Programming Rust - Blandy, Orendorff & Tindall](https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/) book.
 
 The goal is to create a declarative macro that provides a convenient way to create a Json structure in Rust from a JSON like string.
 
